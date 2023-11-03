@@ -25,16 +25,16 @@ const sampleRepo2: GithubItem = {
 
 type TestComponentProps = {
   trendingRepos: GithubItem[];
-  favoritedRepos: GithubItem[];
-  handleFavoriteRepo: (repo: GithubItem) => void;
-  handleUnfavoriteRepo: (repo: GithubItem) => void;
+  favouritedRepos: GithubItem[];
+  handleFavouriteRepo: (repo: GithubItem) => void;
+  handleUnfavouriteRepo: (repo: GithubItem) => void;
 };
 
 const TestComponent: React.FC<TestComponentProps> = ({
   trendingRepos,
-  favoritedRepos,
-  handleFavoriteRepo,
-  handleUnfavoriteRepo,
+  favouritedRepos,
+  handleFavouriteRepo,
+  handleUnfavouriteRepo,
 }) => {
   return (
     <div>
@@ -44,20 +44,20 @@ const TestComponent: React.FC<TestComponentProps> = ({
           <li key={repo.id}>{repo.name}</li>
         ))}
       </ul>
-      <h1>Favorited Repositories</h1>
+      <h1>Favourited Repositories</h1>
       <ul>
-        {favoritedRepos.map((repo) => (
+        {favouritedRepos.map((repo) => (
           <li key={repo.id}>{repo.name}</li>
         ))}
       </ul>
       {trendingRepos.map((repo) => (
-        <button key={repo.id} onClick={() => handleFavoriteRepo(repo)}>
-          Favorite {repo.name}
+        <button key={repo.id} onClick={() => handleFavouriteRepo(repo)}>
+          Favourite {repo.name}
         </button>
       ))}
-      {favoritedRepos.map((repo) => (
-        <button key={repo.id} onClick={() => handleUnfavoriteRepo(repo)}>
-          Unfavorite {repo.name}
+      {favouritedRepos.map((repo) => (
+        <button key={repo.id} onClick={() => handleUnfavouriteRepo(repo)}>
+          Unfavourite {repo.name}
         </button>
       ))}
     </div>
@@ -71,12 +71,12 @@ describe("TrendingReposProvider", () => {
   it("should render without errors and include child components", () => {
     render(
       <TrendingReposProvider>
-        {({ favoritedRepos, handleFavoriteRepo, handleUnfavoriteRepo }) => (
+        {({ favouritedRepos, handleFavouriteRepo, handleUnfavouriteRepo }) => (
           <TestComponent
             trendingRepos={[sampleRepo1, sampleRepo2]}
-            favoritedRepos={[sampleRepo1]}
-            handleFavoriteRepo={handleFavoriteRepo}
-            handleUnfavoriteRepo={handleUnfavoriteRepo}
+            favouritedRepos={[sampleRepo1]}
+            handleFavouriteRepo={handleFavouriteRepo}
+            handleUnfavouriteRepo={handleUnfavouriteRepo}
           />
         )}
       </TrendingReposProvider>
@@ -84,36 +84,36 @@ describe("TrendingReposProvider", () => {
 
     // Check if the elements are present in the rendered content
     expect(screen.getByText("Trending Repositories")).toBeInTheDocument();
-    expect(screen.getByText("Favorited Repositories")).toBeInTheDocument();
-    expect(screen.getByText("Favorite Sample Repo 1")).toBeInTheDocument();
-    expect(screen.getByText("Unfavorite Sample Repo 1")).toBeInTheDocument();
+    expect(screen.getByText("Favourited Repositories")).toBeInTheDocument();
+    expect(screen.getByText("Favourite Sample Repo 1")).toBeInTheDocument();
+    expect(screen.getByText("Unfavourite Sample Repo 1")).toBeInTheDocument();
   });
-  it("should store favorited repositories in local storage", () => {
+  it("should store favourited repositories in local storage", () => {
     render(
       <TrendingReposProvider>
-        {({ favoritedRepos, handleFavoriteRepo, handleUnfavoriteRepo }) => (
+        {({ favouritedRepos, handleFavouriteRepo, handleUnfavouriteRepo }) => (
           <TestComponent
             trendingRepos={[sampleRepo1, sampleRepo2]}
-            favoritedRepos={favoritedRepos}
-            handleFavoriteRepo={handleFavoriteRepo}
-            handleUnfavoriteRepo={handleUnfavoriteRepo}
+            favouritedRepos={favouritedRepos}
+            handleFavouriteRepo={handleFavouriteRepo}
+            handleUnfavouriteRepo={handleUnfavouriteRepo}
           />
         )}
       </TrendingReposProvider>
     );
 
-    // Click the "Favorite Sample Repo 1" button
-    fireEvent.click(screen.getByText("Favorite Sample Repo 1"));
+    // Click the "Favourite Sample Repo 1" button
+    fireEvent.click(screen.getByText("Favourite Sample Repo 1"));
 
-    // Check if the repository is favorited
-    expect(screen.getByText("Favorited Repositories")).toBeInTheDocument();
+    // Check if the repository is favourited
+    expect(screen.getByText("Favourited Repositories")).toBeInTheDocument();
 
     // Ensure there are two elements with the text "Sample Repo 1"
     expect(screen.getAllByText("Sample Repo 1")).toHaveLength(2);
 
-    // Check if the favorited repository is stored in local storage
+    // Check if the favourited repository is stored in local storage
     const storedRepos = JSON.parse(
-      localStorage.getItem("favoritedRepos") || "[]"
+      localStorage.getItem("favouritedRepos") || "[]"
     );
     expect(storedRepos).toContainEqual(sampleRepo1);
   });
@@ -121,31 +121,31 @@ describe("TrendingReposProvider", () => {
   it("should allow unfavoriting repositories and update local storage", () => {
     render(
       <TrendingReposProvider>
-        {({ favoritedRepos, handleFavoriteRepo, handleUnfavoriteRepo }) => (
+        {({ favouritedRepos, handleFavouriteRepo, handleUnfavouriteRepo }) => (
           <TestComponent
             trendingRepos={[sampleRepo1, sampleRepo2]}
-            favoritedRepos={favoritedRepos}
-            handleFavoriteRepo={handleFavoriteRepo}
-            handleUnfavoriteRepo={handleUnfavoriteRepo}
+            favouritedRepos={favouritedRepos}
+            handleFavouriteRepo={handleFavouriteRepo}
+            handleUnfavouriteRepo={handleUnfavouriteRepo}
           />
         )}
       </TrendingReposProvider>
     );
-    // Click the "Favorite Sample Repo 1" button
-    fireEvent.click(screen.getByText("Favorite Sample Repo 1"));
+    // Click the "Favourite Sample Repo 1" button
+    fireEvent.click(screen.getByText("Favourite Sample Repo 1"));
 
     // Ensure there are two elements with the text "Sample Repo 1"
     expect(screen.getAllByText("Sample Repo 1")).toHaveLength(2);
 
-    // Click the "Unfavorite Sample Repo 1" button
-    fireEvent.click(screen.getByText("Unfavorite Sample Repo 1"));
+    // Click the "Unfavourite Sample Repo 1" button
+    fireEvent.click(screen.getByText("Unfavourite Sample Repo 1"));
 
     // Ensure there is now one element with the text "Sample Repo 1"
     expect(screen.getAllByText("Sample Repo 1")).toHaveLength(1);
 
     // Check if the repository is removed from local storage
     const storedRepos = JSON.parse(
-      localStorage.getItem("favoritedRepos") || "[]"
+      localStorage.getItem("favouritedRepos") || "[]"
     );
     expect(storedRepos).not.toContainEqual(sampleRepo1);
   });

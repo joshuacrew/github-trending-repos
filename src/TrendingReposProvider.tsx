@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { GithubItem, fetchMostFavoritedRepos } from "./api/GithubClient";
+import { GithubItem, fetchMostFavouritedRepos } from "./api/GithubClient";
 
 export interface TrendingReposProviderProps {
   children: (props: {
     trendingRepos: GithubItem[];
-    favoritedRepos: GithubItem[];
-    handleFavoriteRepo: (repo: GithubItem) => void;
-    handleUnfavoriteRepo: (repo: GithubItem) => void;
+    favouritedRepos: GithubItem[];
+    handleFavouriteRepo: (repo: GithubItem) => void;
+    handleUnfavouriteRepo: (repo: GithubItem) => void;
   }) => React.ReactNode;
 }
 
@@ -14,11 +14,11 @@ const TrendingReposProvider: React.FC<TrendingReposProviderProps> = ({
   children,
 }) => {
   const [trendingRepos, setTrendingRepos] = useState<GithubItem[]>([]);
-  const [favoritedRepos, setFavoritedRepos] = useState<GithubItem[]>([]);
+  const [favouritedRepos, setFavouritedRepos] = useState<GithubItem[]>([]);
 
   useEffect(() => {
     async function fetchTrendingRepos() {
-      const response = await fetchMostFavoritedRepos();
+      const response = await fetchMostFavouritedRepos();
       setTrendingRepos(response);
     }
 
@@ -26,39 +26,39 @@ const TrendingReposProvider: React.FC<TrendingReposProviderProps> = ({
   }, []);
 
   useEffect(() => {
-    const storedFavoritedRepos = localStorage.getItem("favoritedRepos");
-    if (storedFavoritedRepos) {
-      setFavoritedRepos(JSON.parse(storedFavoritedRepos));
+    const storedFavouritedRepos = localStorage.getItem("favouritedRepos");
+    if (storedFavouritedRepos) {
+      setFavouritedRepos(JSON.parse(storedFavouritedRepos));
     }
   }, []);
 
   const updateLocalStorage = (repos: GithubItem[]) => {
-    localStorage.setItem("favoritedRepos", JSON.stringify(repos));
+    localStorage.setItem("favouritedRepos", JSON.stringify(repos));
   };
 
-  const handleFavoriteRepo = (repo: GithubItem) => {
-    if (!favoritedRepos.find((favorite) => favorite.id === repo.id)) {
-      const updatedFavoritedRepos = [...favoritedRepos, repo];
-      setFavoritedRepos(updatedFavoritedRepos);
-      updateLocalStorage(updatedFavoritedRepos);
+  const handleFavouriteRepo = (repo: GithubItem) => {
+    if (!favouritedRepos.find((favourite) => favourite.id === repo.id)) {
+      const updatedFavouritedRepos = [...favouritedRepos, repo];
+      setFavouritedRepos(updatedFavouritedRepos);
+      updateLocalStorage(updatedFavouritedRepos);
     }
   };
 
-  const handleUnfavoriteRepo = (repo: GithubItem) => {
-    const updatedFavoritedRepos = favoritedRepos.filter(
-      (favorite) => favorite.id !== repo.id
+  const handleUnfavouriteRepo = (repo: GithubItem) => {
+    const updatedFavouritedRepos = favouritedRepos.filter(
+      (favourite) => favourite.id !== repo.id
     );
-    setFavoritedRepos(updatedFavoritedRepos);
-    updateLocalStorage(updatedFavoritedRepos);
+    setFavouritedRepos(updatedFavouritedRepos);
+    updateLocalStorage(updatedFavouritedRepos);
   };
 
   return (
     <div>
       {children({
         trendingRepos,
-        favoritedRepos,
-        handleFavoriteRepo,
-        handleUnfavoriteRepo,
+        favouritedRepos,
+        handleFavouriteRepo,
+        handleUnfavouriteRepo,
       })}
     </div>
   );

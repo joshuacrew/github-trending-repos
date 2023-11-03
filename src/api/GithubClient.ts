@@ -12,7 +12,7 @@ export type GithubItem = {
   created_at: string;
 };
 
-async function fetchMostFavoritedRepos(): Promise<GithubItem[]> {
+async function fetchMostFavouritedRepos(): Promise<GithubItem[]> {
   const currentDate = new Date(); // Get the current date and time
   const oneWeekAgo = new Date(currentDate);
   oneWeekAgo.setDate(currentDate.getDate() - 7); // Subtract 7 days
@@ -24,9 +24,9 @@ async function fetchMostFavoritedRepos(): Promise<GithubItem[]> {
     const json = await response.json();
     return json.items as GithubItem[];
   } catch (error) {
-    console.error('Error fetching most favorited repositories:', error);
+    console.error('Error fetching most favourited repositories:', error);
     throw error;
   }
 }
 
-export { fetchMostFavoritedRepos };
+export { fetchMostFavouritedRepos };

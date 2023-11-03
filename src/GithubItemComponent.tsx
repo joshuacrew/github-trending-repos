@@ -4,23 +4,23 @@ import { Grid, Typography, ListItem, Button, Link } from "@mui/material";
 
 export interface GithubItemComponentProps {
   repo: GithubItem;
-  isFavorited: boolean;
-  onFavorite: () => void;
-  onUnfavorite: () => void;
+  isFavourited: boolean;
+  onFavourite: () => void;
+  onUnfavourite: () => void;
   isTrendingSection: boolean;
 }
 
 const GithubItemComponent: React.FC<GithubItemComponentProps> = ({
   repo,
-  isFavorited,
-  onFavorite,
-  onUnfavorite,
+  isFavourited,
+  onFavourite,
+  onUnfavourite,
   isTrendingSection,
 }) => {
-  const actionButton = isFavorited ? (
+  const actionButton = isFavourited ? (
     isTrendingSection ? (
-      <Button variant="contained" color="secondary" onClick={onUnfavorite}>
-        Unfavorite
+      <Button variant="contained" color="secondary" onClick={onUnfavourite}>
+        Unfavourite
       </Button>
     ) : (
       <Link href={repo.html_url} target="_blank" rel="noopener noreferrer">
@@ -30,8 +30,8 @@ const GithubItemComponent: React.FC<GithubItemComponentProps> = ({
       </Link>
     )
   ) : (
-    <Button variant="contained" color="primary" onClick={onFavorite}>
-      Favorite
+    <Button variant="contained" color="primary" onClick={onFavourite}>
+      Favourite
     </Button>
   );
 

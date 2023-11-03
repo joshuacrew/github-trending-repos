@@ -5,16 +5,16 @@ import { GithubItem } from './api/GithubClient';
 
 interface AppProps {
   trendingReposProps: GithubItem[];
-  favoritedReposProps: GithubItem[];
-  handleFavoriteRepoProps: (repo: GithubItem) => void;
-  handleUnfavoriteRepoProps: (repo: GithubItem) => void;
+  favouritedReposProps: GithubItem[];
+  handleFavouriteRepoProps: (repo: GithubItem) => void;
+  handleUnfavouriteRepoProps: (repo: GithubItem) => void;
 }
 
 const App: React.FC<AppProps> = ({
   trendingReposProps,
-  favoritedReposProps,
-  handleFavoriteRepoProps,
-  handleUnfavoriteRepoProps,
+  favouritedReposProps,
+  handleFavouriteRepoProps,
+  handleUnfavouriteRepoProps,
 }) => {
   return (
     <Grid container spacing={4}>
@@ -25,24 +25,24 @@ const App: React.FC<AppProps> = ({
             <GithubItemComponent
               key={repo.id}
               repo={repo}
-              isFavorited={favoritedReposProps.some((favorite) => favorite.id === repo.id)}
-              onFavorite={() => handleFavoriteRepoProps(repo)}
-              onUnfavorite={() => handleUnfavoriteRepoProps(repo)}
+              isFavourited={favouritedReposProps.some((favourite) => favourite.id === repo.id)}
+              onFavourite={() => handleFavouriteRepoProps(repo)}
+              onUnfavourite={() => handleUnfavouriteRepoProps(repo)}
               isTrendingSection={true}
             />
           ))}
         </List>
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="h4">Favorited Repositories</Typography>
+        <Typography variant="h4">Favourited Repositories</Typography>
         <List>
-          {favoritedReposProps.map((repo) => (
+          {favouritedReposProps.map((repo) => (
             <GithubItemComponent
               key={repo.id}
               repo={repo}
-              isFavorited={true}
-              onFavorite={() => handleUnfavoriteRepoProps(repo)}
-              onUnfavorite={() => handleUnfavoriteRepoProps(repo)}
+              isFavourited={true}
+              onFavourite={() => handleUnfavouriteRepoProps(repo)}
+              onUnfavourite={() => handleUnfavouriteRepoProps(repo)}
               isTrendingSection={false}
             />
           ))}

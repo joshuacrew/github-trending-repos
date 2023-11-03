@@ -19,9 +19,9 @@ describe("GithubItemComponent", () => {
     render(
       <GithubItemComponent
         repo={sampleRepo}
-        isFavorited={false}
-        onFavorite={jest.fn()}
-        onUnfavorite={jest.fn()}
+        isFavourited={false}
+        onFavourite={jest.fn()}
+        onUnfavourite={jest.fn()}
         isTrendingSection={true}
       />
     );
@@ -31,32 +31,32 @@ describe("GithubItemComponent", () => {
     expect(screen.getByText("A sample repository")).toBeInTheDocument();
     expect(screen.getByText("100 stars")).toBeInTheDocument();
 
-    // Make sure the action button is "Favorite"
-    expect(screen.getByText("Favorite")).toBeInTheDocument();
+    // Make sure the action button is "Favourite"
+    expect(screen.getByText("Favourite")).toBeInTheDocument();
   });
 
-  it("should render a favorited repository with an 'Unfavorite' button", () => {
+  it("should render a favourited repository with an 'Unfavourite' button", () => {
     render(
       <GithubItemComponent
         repo={sampleRepo}
-        isFavorited={true}
-        onFavorite={jest.fn()}
-        onUnfavorite={jest.fn()}
+        isFavourited={true}
+        onFavourite={jest.fn()}
+        onUnfavourite={jest.fn()}
         isTrendingSection={true}
       />
     );
 
-    // Make sure the action button is "Unfavorite"
-    expect(screen.getByText("Unfavorite")).toBeInTheDocument();
+    // Make sure the action button is "Unfavourite"
+    expect(screen.getByText("Unfavourite")).toBeInTheDocument();
   });
 
-  it("should render a favorited repository with a 'Go to GitHub' button", () => {
+  it("should render a favourited repository with a 'Go to GitHub' button", () => {
     render(
       <GithubItemComponent
         repo={sampleRepo}
-        isFavorited={true}
-        onFavorite={jest.fn()}
-        onUnfavorite={jest.fn()}
+        isFavourited={true}
+        onFavourite={jest.fn()}
+        onUnfavourite={jest.fn()}
         isTrendingSection={false}
       />
     );
@@ -65,41 +65,41 @@ describe("GithubItemComponent", () => {
     expect(screen.getByText("Go to GitHub")).toBeInTheDocument();
   });
 
-  it("should call the 'onFavorite' function when 'Favorite' is clicked", () => {
-    const onFavorite = jest.fn();
+  it("should call the 'onFavourite' function when 'Favourite' is clicked", () => {
+    const onFavourite = jest.fn();
     render(
       <GithubItemComponent
         repo={sampleRepo}
-        isFavorited={false}
-        onFavorite={onFavorite}
-        onUnfavorite={jest.fn()}
+        isFavourited={false}
+        onFavourite={onFavourite}
+        onUnfavourite={jest.fn()}
         isTrendingSection={true}
       />
     );
 
-    // Click the "Favorite" button
-    fireEvent.click(screen.getByText("Favorite"));
+    // Click the "Favourite" button
+    fireEvent.click(screen.getByText("Favourite"));
 
-    // Verify that the 'onFavorite' function was called
-    expect(onFavorite).toHaveBeenCalledTimes(1);
+    // Verify that the 'onFavourite' function was called
+    expect(onFavourite).toHaveBeenCalledTimes(1);
   });
 
-  it("should call the 'onUnfavorite' function when 'Unfavorite' is clicked", () => {
-    const onUnfavorite = jest.fn();
+  it("should call the 'onUnfavourite' function when 'Unfavourite' is clicked", () => {
+    const onUnfavourite = jest.fn();
     render(
       <GithubItemComponent
         repo={sampleRepo}
-        isFavorited={true}
-        onFavorite={jest.fn()}
-        onUnfavorite={onUnfavorite}
+        isFavourited={true}
+        onFavourite={jest.fn()}
+        onUnfavourite={onUnfavourite}
         isTrendingSection={true}
       />
     );
 
-    // Click the "Unfavorite" button
-    fireEvent.click(screen.getByText("Unfavorite"));
+    // Click the "Unfavourite" button
+    fireEvent.click(screen.getByText("Unfavourite"));
 
-    // Verify that the 'onUnfavorite' function was called
-    expect(onUnfavorite).toHaveBeenCalledTimes(1);
+    // Verify that the 'onUnfavourite' function was called
+    expect(onUnfavourite).toHaveBeenCalledTimes(1);
   });
 });

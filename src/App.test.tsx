@@ -10,10 +10,10 @@ jest.mock("./GithubItemComponent", () => {
     default: (gh: GithubItemComponentProps) => {
       return (
         <div>
-          {gh.isFavorited ? (
-            <button onClick={gh.onUnfavorite}>Unfavorite</button>
+          {gh.isFavourited ? (
+            <button onClick={gh.onUnfavourite}>Unfavourite</button>
           ) : (
-            <button onClick={gh.onFavorite}>Favorite</button>
+            <button onClick={gh.onFavourite}>Favourite</button>
           )}
           <div>{gh.repo.name}</div>
         </div>
@@ -43,14 +43,14 @@ describe("App", () => {
     created_at: "2023-10-31",
   };
 
-  it("should render trending GitHub repositories with 'Favorite' button", async () => {
-    const handleFavoriteRepo = jest.fn();
+  it("should render trending GitHub repositories with 'Favourite' button", async () => {
+    const handleFavouriteRepo = jest.fn();
     render(
       <App
         trendingReposProps={[sampleRepo1, sampleRepo2]}
-        favoritedReposProps={[]}
-        handleFavoriteRepoProps={handleFavoriteRepo}
-        handleUnfavoriteRepoProps={jest.fn()}
+        favouritedReposProps={[]}
+        handleFavouriteRepoProps={handleFavouriteRepo}
+        handleUnfavouriteRepoProps={jest.fn()}
       />
     );
 
@@ -62,44 +62,44 @@ describe("App", () => {
     expect(screen.getByText("Sample Repo 1")).toBeInTheDocument();
     expect(screen.getByText("Sample Repo 2")).toBeInTheDocument();
 
-    // Ensure the "Favorite" button is present for each repository
-    const favoriteButtons = screen.getAllByText("Favorite");
-    expect(favoriteButtons).toHaveLength(2);
+    // Ensure the "Favourite" button is present for each repository
+    const favouriteButtons = screen.getAllByText("Favourite");
+    expect(favouriteButtons).toHaveLength(2);
 
-    favoriteButtons.forEach((button) => {
+    favouriteButtons.forEach((button) => {
       fireEvent.click(button);
     });
 
-    // Ensure that the handleFavoriteRepo function is called for each repository
-    expect(handleFavoriteRepo).toHaveBeenCalledTimes(2);
+    // Ensure that the handleFavouriteRepo function is called for each repository
+    expect(handleFavouriteRepo).toHaveBeenCalledTimes(2);
   });
 
-  it('should render favorited repositories with "Unfavorite" button', async () => {
-    const handleUnfavoriteRepo = jest.fn();
+  it('should render favourited repositories with "Unfavourite" button', async () => {
+    const handleUnfavouriteRepo = jest.fn();
     render(
       <App
         trendingReposProps={[]}
-        favoritedReposProps={[sampleRepo1, sampleRepo2]}
-        handleFavoriteRepoProps={jest.fn()}
-        handleUnfavoriteRepoProps={handleUnfavoriteRepo}
+        favouritedReposProps={[sampleRepo1, sampleRepo2]}
+        handleFavouriteRepoProps={jest.fn()}
+        handleUnfavouriteRepoProps={handleUnfavouriteRepo}
       />
     );
 
-    expect(screen.getByText("Favorited Repositories")).toBeInTheDocument();
+    expect(screen.getByText("Favourited Repositories")).toBeInTheDocument();
 
     // Ensure the sample repositories are rendered
     expect(screen.getByText("Sample Repo 1")).toBeInTheDocument();
     expect(screen.getByText("Sample Repo 2")).toBeInTheDocument();
 
-    // Ensure the "Unfavorite" button is present for each repository
-    const unfavoriteButtons = screen.getAllByText("Unfavorite");
-    expect(unfavoriteButtons).toHaveLength(2);
+    // Ensure the "Unfavourite" button is present for each repository
+    const unfavouriteButtons = screen.getAllByText("Unfavourite");
+    expect(unfavouriteButtons).toHaveLength(2);
 
-    unfavoriteButtons.forEach((button) => {
+    unfavouriteButtons.forEach((button) => {
       fireEvent.click(button);
     });
 
-    // Ensure that the handleUnfavoriteRepo function is called for each repository
-    expect(handleUnfavoriteRepo).toHaveBeenCalledTimes(2);
+    // Ensure that the handleUnfavouriteRepo function is called for each repository
+    expect(handleUnfavouriteRepo).toHaveBeenCalledTimes(2);
   });
 });

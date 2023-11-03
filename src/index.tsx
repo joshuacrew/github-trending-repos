@@ -7,15 +7,15 @@ function Root() {
     <TrendingReposProvider>
       {({
         trendingRepos,
-        favoritedRepos,
-        handleFavoriteRepo,
-        handleUnfavoriteRepo,
+        favouritedRepos,
+        handleFavouriteRepo,
+        handleUnfavouriteRepo,
       }) => (
         <App
           trendingReposProps={trendingRepos}
-          favoritedReposProps={favoritedRepos}
-          handleFavoriteRepoProps={handleFavoriteRepo}
-          handleUnfavoriteRepoProps={handleUnfavoriteRepo}
+          favouritedReposProps={favouritedRepos}
+          handleFavouriteRepoProps={handleFavouriteRepo}
+          handleUnfavouriteRepoProps={handleUnfavouriteRepo}
         />
       )}
     </TrendingReposProvider>

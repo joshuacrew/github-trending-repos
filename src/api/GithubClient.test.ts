@@ -1,7 +1,7 @@
-import { fetchMostFavoritedRepos } from './GithubClient';
+import { fetchMostFavouritedRepos } from './GithubClient';
 
-test('fetchMostFavoritedRepos fetches data correctly', async () => {
-  const data = await fetchMostFavoritedRepos();
+test('fetchMostFavouritedRepos fetches data correctly', async () => {
+  const data = await fetchMostFavouritedRepos();
 
   // Perform assertions on the fetched data
   expect(Array.isArray(data)).toBe(true);
